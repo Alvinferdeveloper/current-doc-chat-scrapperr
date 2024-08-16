@@ -1,0 +1,22 @@
+{
+  "name": "doc_back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.1",
+    "@tensorflow/tfjs": "^4.20.0",
+    "bertjs": "^0.0.1",
+    "dotenv": "^16.4.5",
+    "pdf-merger-js": "^5.1.2",
+    "pdfkit": "^0.15.0",
+    "puppeteer": "^22.15.0"
+  }
+}
