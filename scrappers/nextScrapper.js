@@ -1,8 +1,8 @@
 import puppeteer from "puppeteer";
-import { saveDocumentation } from "../services/documentation.service";
+import { saveDocumentation } from "../services/documentation.service.js";
 
 export default async function nextScrapper(url){
-    const browser = await puppeteer.launch({ headless:false});
+    const browser = await puppeteer.launch({ headless:true});
     const page = await browser.newPage();
     await page.goto(url);
 
@@ -13,15 +13,21 @@ export default async function nextScrapper(url){
       return Array.from(ancorsContainer.querySelectorAll('a')).map(anchor => anchor.href);
     });
 
-    let text = ''
-    for(let link of links.slice(0,40)) {
+    let topics = [];
+    for(let link of links.slice(0,5)) {
       await page.goto(link,{ waitUntil:'domcontentloaded', timeout:0});
-      text += await page.evaluate(()=>{
+      const newTopic = await page.evaluate(()=>{
         const documentation = document.querySelector('.prose-vercel');
-        return documentation ? documentation.innerText : '';
+        const topic = document.querySelector(".break-words")
+        return {
+          documentation: documentation.innerText || '',
+          topic: topic.innerText || ''
+        }
       })
+      topics.push(newTopic);
     }
    await browser.close();
-   saveDocumentation(text)
+   console.log(topics)
+   //saveDocumentation(topics)
 }
 
